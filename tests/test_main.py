@@ -1,3 +1,5 @@
+import random
+
 import pytest
 
 from functions import sort_list
@@ -42,9 +44,9 @@ class TestMainPage:
         value = page.check_elem_is_not_present()
         assert value is True, 'The element is present in DOM'
 
-    
-
-
-
-
-
+    @pytest.mark.parametrize("value", [random.choice([1, 2, 3, 4, 5, 6])])
+    def test(self, driver, value):
+        page = MainPage(driver, self.url.base_url)
+        page.open()
+        page.login()
+        page.check_card(value)

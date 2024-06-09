@@ -39,6 +39,9 @@ class MainPage(BasePage):
     def check_elem_is_not_present(self):
         return self.element_is_not_present(self.main_locators.COUNT_ITEMS)
 
+    def check_card(self, value):
+        return self.main_locators.get_card(value)
+
 
 
 

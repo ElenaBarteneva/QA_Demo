@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
@@ -19,14 +20,21 @@ class BasePage:
         self.driver = driver
         self.url = url
 
+    @allure.step('login')
     def login(self):
-        self.element_is_visible(self.login_locators.USERNAME_FIELD).send_keys(self.user.USERNAME)
-        self.element_is_visible(self.login_locators.PASSWORD_FIELD).send_keys(self.user.PASSWORD)
-        self.element_is_clickable(self.login_locators.LOGIN_BUTTON).click()
+        with allure.step('Entering username'):
+            self.element_is_visible(self.login_locators.USERNAME_FIELD).send_keys(self.user.USERNAME)
+        with allure.step('Entering password'):
+            self.element_is_visible(self.login_locators.PASSWORD_FIELD).send_keys(self.user.PASSWORD)
+        with allure.step('Clicking login button'):
+            self.element_is_clickable(self.login_locators.LOGIN_BUTTON).click()
 
+    @allure.step('open browser')
     def open(self):
         self.driver.get(self.url)
 
+
+    @allure.step('get text')
     def get_text(self, locator):
         return self.element_is_visible(locator).text
 
@@ -37,7 +45,7 @@ class BasePage:
         return self.element_is_visible(locator).is_displayed()
 
     def length(self, locator):
-        return len(self.element_is_visible(locator))
+        return len(self.elements_are_visible(locator))
 
     def element_is_clickable(self, locator, timeout=timeout):
         return wait(self.driver, timeout).until(EC.element_to_be_clickable(locator))
@@ -57,5 +65,7 @@ class BasePage:
 
     def element_is_not_present(self, locator, timeout=timeout):
         return wait(self.driver, timeout).until(EC.invisibility_of_element_located(locator))
+
+
 
 

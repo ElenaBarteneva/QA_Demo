@@ -10,3 +10,9 @@ class MainLocators:
     RESET = ('xpath', '//a[@data-test="reset-sidebar-link"]')
     TITLE = ('xpath', '//span[@data-test="title"]')
     PRODUCT_PRICES = ('xpath', '//div[@data-test="inventory-item-price"]')
+
+    def get_card(self, value):
+        return "css selector", f"div[data-test='inventory-item']:nth-child({value})"
+
+    # CARD_LAMBDA = lambda self, x: f"div[data-test='inventory-item']:nth-child({x})"
+    #
